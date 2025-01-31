@@ -1,0 +1,6 @@
+@Common_CQRS_Mediatr_dotnet_HostAddress = http://localhost:5145
+
+GET {{Common_CQRS_Mediatr_dotnet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
