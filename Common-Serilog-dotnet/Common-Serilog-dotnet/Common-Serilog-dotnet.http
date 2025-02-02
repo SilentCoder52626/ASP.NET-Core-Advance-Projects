@@ -1,0 +1,6 @@
+@Common_Serilog_dotnet_HostAddress = http://localhost:5188
+
+GET {{Common_Serilog_dotnet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

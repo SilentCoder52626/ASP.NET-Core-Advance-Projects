@@ -398,3 +398,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/Common-Serilog-dotnet/Common-Serilog-dotnet/appsettings.Development.json
