@@ -1,13 +1,42 @@
-## CQRS and MediatR in ASP.NET Core - Building Scalable Systems
+# CQRS and MediatR in ASP.NET Core - Building Scalable Systems
 
 **CQRS (Command Query Responsibility Segregation)** is a software architectural pattern that separates the read and write operations of a system into two distinct parts.
 
-**Key Concepts of CQRS**:
-Write Operations (Commands) and Read Operations (Queries) are handled separately.
-Different models are optimized for each type of operation.
-This separation can lead to simpler and more scalable architectures, especially in complex systems where the read and write patterns differ significantly.
+✅ Commands: Modify data (Create, Update, Delete)
 
-## Structured Logging with Serilog in ASP.NET Core
+✅ Queries: Retrieve data (Read operations)
+
+This separation enhances scalability, performance, and maintainability.
+
+**Benefits of CQRS**
+
+✔️ Better scalability and performance
+
+✔️ Cleaner and more maintainable code
+
+✔️ Allows independent optimization of read and write operations
+
+✔️ Works well with Event Sourcing and Microservices
+
+**What is MediatR?**
+
+MediatR is a lightweight in-process messaging library that helps decouple components in ASP.NET Core applications. It enables communication between components without direct dependencies using the Mediator pattern.
+
+**Why Use MediatR?**
+
+✔️ Reduces direct dependencies between layers
+
+✔️ Simplifies unit testing by eliminating direct service dependencies
+
+✔️ Improves maintainability and scalability
+
+
+**Install Required NuGet Packages**
+ ```
+dotnet add package MediatR
+```
+
+# Structured Logging with Serilog in ASP.NET Core
 Logging is an essential part of any application for debugging, monitoring, and tracking issues. In .NET Core, Serilog is a popular structured logging library that provides powerful features like log enrichment, various sinks (file, console, database), and JSON-formatted logs.
 Why Use Serilog?
 
