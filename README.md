@@ -40,13 +40,13 @@ dotnet add package MediatR
 Logging is an essential part of any application for debugging, monitoring, and tracking issues. In .NET Core, Serilog is a popular structured logging library that provides powerful features like log enrichment, various sinks (file, console, database), and JSON-formatted logs.
 Why Use Serilog?
 
-✅ Supports structured logging (JSON format).
+✔️ Supports structured logging (JSON format).
 
-✅ Multiple sinks (console, file, database, cloud, etc.).
+✔️ Multiple sinks (console, file, database, cloud, etc.).
 
-✅ Easy integration with .NET Core.
+✔️ Easy integration with .NET Core.
 
-✅ Enrichment features like MachineName, ThreadId, and RequestId.
+✔️ Enrichment features like MachineName, ThreadId, and RequestId.
 
  **Install Required NuGet Packages**
  ```
@@ -102,3 +102,35 @@ app.UseSerilogRequestLogging();
 Serilog makes logging in .NET Core applications easy and powerful. With structured logging and multiple sinks, you can effectively monitor and debug your application. Try integrating Serilog with Seq, Elasticsearch, or Application Insights for even better log management!
 
 🔹 Happy Logging with Serilog! 🚀
+
+# Global Exception Handling in .NET
+
+Global exception handling ensures applications remain stable by managing unexpected errors efficiently.
+
+**Importance**
+
+✔️ Prevents Crashes: Avoids application failures due to unhandled exceptions.
+
+✔️ Improves Debugging: Facilitates logging for troubleshooting.
+
+✔️ Enhances User Experience: Provides friendly error messages.
+
+✔️ Centralized Handling: Reduces redundant error-handling code.
+
+**Old Method (Pre .NET 6)**
+
+✔️ AppDomain.UnhandledException: For console apps.
+
+✔️ Application_Error in Global.asax: For ASP.NET MVC.
+
+✔️ Middleware-based Handling: Custom middleware in .NET Core.
+
+**New Method (Since .NET 6)**
+
+✔️ Built-in Exception Middleware: Centralized handling.
+
+✔️ UseExceptionHandler: Simplified global error capture.
+
+✔️ Minimal APIs Integration: Clean, efficient error handling.
+
+.NET's newer global exception handling methods simplify error management, enhance maintainability, and improve debugging. Implementing it ensures a robust and user-friendly application.
