@@ -40,13 +40,13 @@ dotnet add package MediatR
 Logging is an essential part of any application for debugging, monitoring, and tracking issues. In .NET Core, Serilog is a popular structured logging library that provides powerful features like log enrichment, various sinks (file, console, database), and JSON-formatted logs.
 Why Use Serilog?
 
-✅ Supports structured logging (JSON format).
+✔️ Supports structured logging (JSON format).
 
-✅ Multiple sinks (console, file, database, cloud, etc.).
+✔️ Multiple sinks (console, file, database, cloud, etc.).
 
-✅ Easy integration with .NET Core.
+✔️ Easy integration with .NET Core.
 
-✅ Enrichment features like MachineName, ThreadId, and RequestId.
+✔️ Enrichment features like MachineName, ThreadId, and RequestId.
 
  **Install Required NuGet Packages**
  ```
