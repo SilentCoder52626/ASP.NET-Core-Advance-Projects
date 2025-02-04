@@ -134,3 +134,67 @@ Global exception handling ensures applications remain stable by managing unexpec
 ✔️ Minimal APIs Integration: Clean, efficient error handling.
 
 .NET's newer global exception handling methods simplify error management, enhance maintainability, and improve debugging. Implementing it ensures a robust and user-friendly application.
+
+
+# Validation with MediatR Pipeline and FluentValidation
+
+**Fluent Validation** is a popular .NET library for building strongly-typed validation rules. It simplifies input validation with a fluent API and provides better maintainability.
+
+```
+public class CreateUserValidator : AbstractValidator<CreateUserCommand>
+{
+    public CreateUserValidator()
+    {
+        RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+        RuleFor(x => x.Email).EmailAddress().WithMessage("Invalid email format");
+    }
+} 
+```
+
+**Fluent Validation in MediatR Pipeline**
+
+Fluent Validation can be integrated into the MediatR pipeline using a validation behavior that runs before request handlers. This ensures that requests are validated before processing.
+
+```
+public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse> where TRequest : class
+{
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(next);
+
+        if (validators.Any())
+        {
+            var context = new ValidationContext<TRequest>(request);
+            var validationResults = await Task.WhenAll(validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+
+            var failures = validationResults
+           .Where(r => r.Errors.Count > 0)
+           .SelectMany(r => r.Errors)
+           .ToList();
+
+            if (failures.Count > 0)
+                throw new ValidationException(failures);
+        }
+        return await next().ConfigureAwait(false);
+
+    }
+}
+```
+
+Register Fluent Validation and MediatR in Program.cs:
+
+```
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+    cfg.AddOpenBehavior(typeof(RequestResponseLoggingBehavior<,>));
+    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+
+
+});
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+```
