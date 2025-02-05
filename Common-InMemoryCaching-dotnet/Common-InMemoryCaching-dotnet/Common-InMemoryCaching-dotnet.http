@@ -1,0 +1,6 @@
+@Common_InMemoryCaching_dotnet_HostAddress = http://localhost:5053
+
+GET {{Common_InMemoryCaching_dotnet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
