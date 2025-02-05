@@ -198,3 +198,16 @@ builder.Services.AddProblemDetails();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 ```
+
+# Options Pattern in .NET  
+
+The **Options Pattern** in .NET is a design pattern used to manage application configuration settings in a structured and strongly typed manner. It leverages dependency injection to provide configuration values to different parts of the application.  
+
+**Importance:**  
+
+- **Strongly Typed Configuration:** Ensures type safety and avoids magic strings.  
+- **Separation of Concerns:** Keeps configuration logic separate from business logic.  
+- **Dependency Injection Support:** Enables easy testing and better maintainability.  
+- **Dynamic Updates:** Using `IOptionsMonitor`, applications can react to configuration changes at runtime.  
+- **Improved Readability:** Organizes configuration settings into meaningful classes, making the code more readable and manageable.
+  
