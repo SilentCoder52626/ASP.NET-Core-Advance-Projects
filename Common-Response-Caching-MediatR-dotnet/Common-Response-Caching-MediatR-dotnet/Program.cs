@@ -1,3 +1,4 @@
+using Common_Response_Caching_MediatR_dotnet.Caching;
 using Common_Response_Caching_MediatR_dotnet.Features.Products.Commands.Create;
 using Common_Response_Caching_MediatR_dotnet.Features.Products.Commands.Delete;
 using Common_Response_Caching_MediatR_dotnet.Features.Products.Commands.Update;
@@ -17,7 +18,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+    cfg.AddOpenBehavior(typeof(CachingBehavior<,>));
+});
+builder.Services.AddDistributedMemoryCache();
+
 
 var app = builder.Build();
 
@@ -25,7 +32,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.DisplayRequestDuration();
+    });
 }
 
 app.UseHttpsRedirection();
