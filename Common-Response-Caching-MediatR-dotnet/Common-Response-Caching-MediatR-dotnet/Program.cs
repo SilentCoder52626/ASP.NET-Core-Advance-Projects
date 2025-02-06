@@ -7,7 +7,6 @@ using Common_Response_Caching_MediatR_dotnet.Features.Products.Queries.Get;
 using Common_Response_Caching_MediatR_dotnet.Features.Products.Queries.List;
 using Common_Response_Caching_MediatR_dotnet.Persistence;
 using MediatR;
-using Microsoft.AspNetCore.Hosting.Server;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +22,17 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddOpenBehavior(typeof(CachingBehavior<,>));
 });
-builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddDistributedMemoryCache();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost";
+    options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
+    {
+        AbortOnConnectFail = true,
+        EndPoints = { options.Configuration }
+    };
+});
 
 var app = builder.Build();
 
