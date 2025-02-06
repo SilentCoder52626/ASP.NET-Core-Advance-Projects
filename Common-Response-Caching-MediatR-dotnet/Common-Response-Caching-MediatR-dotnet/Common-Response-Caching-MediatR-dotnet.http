@@ -1,0 +1,6 @@
+@Common_Response_Caching_MediatR_dotnet_HostAddress = http://localhost:5161
+
+GET {{Common_Response_Caching_MediatR_dotnet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
