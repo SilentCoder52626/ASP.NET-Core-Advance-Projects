@@ -251,4 +251,32 @@ Distributed Caching in .NET stores data across multiple servers or instances, al
 
 🚀 Use **Distributed Caching** for high availability and performance in cloud or multi-node environments!  
 
+# Distributed Caching with Redis and MediatR in .NET
+
+
+Distributed Caching with Redis stores frequently used data in an external in-memory database, making it accessible across multiple servers. MediatR is used to implement **CQRS (Command Query Responsibility Segregation)**, ensuring a clean and scalable request-handling approach.
+
+
+🚀 **Why Use Redis for Distributed Caching?**  
+
+- **Global Accessibility** – Cached data is available across multiple servers, ensuring consistency.  
+- **High Performance** – Redis is an in-memory datastore, making data retrieval ultra-fast.  
+- **Persistence & Reliability** – Cache remains even if the application restarts.  
+- **Scalability** – Works well in cloud and microservices architectures.  
+
+⚡ **Why Use MediatR?**  
+
+- **Decouples Business Logic** – Separates request handling, improving maintainability.  
+- **Enhances Code Readability** – Reduces dependencies and simplifies architecture.  
+- **Supports Pipeline Behaviors** – Allows caching, logging, and validation without modifying request handlers.  
+
+🔥 **Redis + MediatR = Optimized Performance**  
+
+By combining **Redis for caching** and **MediatR for structured request handling**, applications can:  
+
+✅ Reduce database load.  
+✅ Improve API response times.  
+✅ Maintain a scalable and modular architecture.  
+
+🚀 Start using **Redis with MediatR** in .NET for a high-performance, scalable, and maintainable application!  
 
