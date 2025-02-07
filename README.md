@@ -223,3 +223,32 @@ In-Memory Caching in .NET is a technique that stores frequently accessed data in
 
 🚀 Start using In-Memory Caching in .NET to boost your application's speed and efficiency!  
 
+# Distributed Caching in .NET
+
+Distributed Caching in .NET stores data across multiple servers or instances, allowing applications to access cached data globally instead of relying on local memory.
+
+**Importance**  
+- **Scalability** – Works across multiple servers, ideal for load-balanced environments.  
+- **Persistence** – Survives application restarts, unlike in-memory caching.  
+- **Consistency** – Ensures all instances get updated cache data.  
+- **Supports Large Data** – Can handle more extensive data compared to local memory constraints.
+
+# Distributed Caching in .NET
+
+Distributed Caching in .NET stores data across multiple servers or instances, allowing applications to access cached data globally instead of relying on local memory.
+
+**Importance**  
+
+- **Scalability** – Works across multiple servers, ideal for load-balanced environments.  
+- **Persistence** – Survives application restarts, unlike in-memory caching.  
+- **Consistency** – Ensures all instances get updated cache data.  
+- **Supports Large Data** – Can handle more extensive data compared to local memory constraints.
+
+**Why Use Distributed Caching Instead of In-Memory?**
+
+- **In-Memory Cache** is tied to a single instance and resets on restarts.  
+- **Distributed Cache** provides global access, making it more reliable for multi-server apps.  
+
+🚀 Use **Distributed Caching** for high availability and performance in cloud or multi-node environments!  
+
+
