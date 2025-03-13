@@ -1,0 +1,6 @@
+@Common_GraphQL_dotnet_HostAddress = http://localhost:5012
+
+GET {{Common_GraphQL_dotnet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
