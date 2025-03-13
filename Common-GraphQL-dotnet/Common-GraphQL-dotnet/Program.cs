@@ -1,15 +1,26 @@
 using Common_GraphQL_dotnet.Query;
 using Common_GraphQL_dotnet.Mutations;
+using Common_GraphQL_dotnet.DTO;
+using Common_GraphQL_dotnet.Validator;
+using FluentValidation;
+using Common_GraphQL_dotnet.Error;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddTransient<AbstractValidator<GameReviewDto>, GameReviewValidator>();
+
 
 builder
    .Services
    .AddGraphQLServer() // Adds a GraphQL server configuration to the DI
+   .AddErrorFilter(provider =>
+   {
+       return new ServerErrorFilter(
+          provider.GetRequiredService<ILogger<ServerErrorFilter>>(),
+          builder.Environment);
+   })
    .AddMutationType<GamesMutation>() // Add GraphQL root mutation type
    .AddQueryType<GamesQuery>() // Add GraphQL root query type
    .ModifyRequestOptions(options =>
