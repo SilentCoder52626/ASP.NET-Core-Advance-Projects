@@ -41,6 +41,7 @@ builder
    })
    .AddMutationType<GamesMutation>() // Add GraphQL root mutation type
    .AddQueryType<GamesQuery>() // Add GraphQL root query type
+   .AddTypeExtension<ReviewerQuery>()
    .ModifyRequestOptions(options =>
    {
        // allow exceptions to be included in response when in development
