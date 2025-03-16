@@ -9,8 +9,8 @@ namespace Common_GraphQL_dotnet.Validator
         public GameReviewValidator()
         {
             RuleFor(e => e.GameId)
-              .Must(gameId => GameData.Games.Any(game => game.GameId == gameId))
-              .WithMessage(e => $"A game having id '{e.GameId}' does not exist");
+                .NotNull()
+                .NotEmpty();
 
             RuleFor(e => e.Rating)
               .LessThanOrEqualTo(100)

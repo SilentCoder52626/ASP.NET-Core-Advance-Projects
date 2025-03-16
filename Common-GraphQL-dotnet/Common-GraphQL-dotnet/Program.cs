@@ -6,6 +6,7 @@ using FluentValidation;
 using Common_GraphQL_dotnet.Error;
 using Common_GraphQL_dotnet.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using Common_GraphQL_dotnet.Data.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,11 +54,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-
 }
 
 app.UseHttpsRedirection();
 
+await Seeder.SeedDatabase(app);
 
 app.MapGraphQL("/");
 
