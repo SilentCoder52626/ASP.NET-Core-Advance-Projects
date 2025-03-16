@@ -1,7 +1,10 @@
-﻿using Common_GraphQL_dotnet.DTO;
+﻿using Common_GraphQL_dotnet.Data.Context;
+using Common_GraphQL_dotnet.Data.Entity;
+using Common_GraphQL_dotnet.DTO;
 using Common_GraphQL_dotnet.Exceptions;
 using Common_GraphQL_dotnet.Model;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace Common_GraphQL_dotnet.Mutations
 {
@@ -16,21 +19,39 @@ namespace Common_GraphQL_dotnet.Mutations
         }
 
         [GraphQLDescription("Submit a game review")]
-        public GameReviewDto SubmitGameReview(GameReviewDto gameReview)
+        public async Task<GameReviewDto> SubmitGameReview(
+        [Service] AppDbContext context,
+        GameReviewDto gameReview)
         {
-            _validator.ValidateAndThrow(gameReview);
+            // use fluent validator
+            await _validator.ValidateAndThrowAsync(gameReview);
 
-            var game = GameData
+            var game = await context
                .Games
-               .FirstOrDefault(game => game.GameId == gameReview.GameId)
+               .FirstOrDefaultAsync(game => game.Id == gameReview.GameId)
                ?? throw GameNotFoundException.WithGameId(gameReview.GameId);
 
-            var gameReviewFromDb = game.Reviews.FirstOrDefault(review =>
-               review.GameId == gameReview.GameId && review.ReviewerId == gameReview.ReviewerId);
+            var reviewer = await context
+               .Reviewers
+               .FirstOrDefaultAsync(reviewer => reviewer.Id == gameReview.ReviewerId)
+               ?? throw ReviewerNotFoundException.WithReviewerId(gameReview.ReviewerId);
+
+            var gameReviewFromDb = await context
+               .Reviews
+               .FirstOrDefaultAsync(review =>
+                  review.GameId == gameReview.GameId
+                  && review.ReviewerId == gameReview.ReviewerId);
 
             if (gameReviewFromDb is null)
             {
-                game.Reviews.Add(gameReview);
+                context.Reviews.Add(new GameReview
+                {
+                    GameId = gameReview.GameId,
+                    Rating = gameReview.Rating,
+                    ReviewedOn = DateTime.UtcNow,
+                    ReviewerId = gameReview.ReviewerId,
+                    Summary = gameReview.Summary
+                });
             }
             else
             {
@@ -38,25 +59,32 @@ namespace Common_GraphQL_dotnet.Mutations
                 gameReviewFromDb.Summary = gameReview.Summary;
             }
 
+            await context.SaveChangesAsync();
+
             return gameReview;
         }
 
+
         [GraphQLDescription("Remove a game review")]
-        public GameReviewDto DeleteGameReview(Guid gameId, Guid reviewerId)
+        public async Task<GameReviewDto> DeleteGameReview(
+           [Service] AppDbContext context,
+           Guid gameId,
+           Guid reviewerId)
         {
-            var game = GameData
-               .Games
-               .FirstOrDefault(game => game.GameId == gameId)
-               ?? throw GameNotFoundException.WithGameId(gameId);
-
-            var gameReviewFromDb = game
+            var gameReviewFromDb = await context
                .Reviews
-               .FirstOrDefault(review => review.GameId == gameId && review.ReviewerId == reviewerId)
-               ?? throw GameReviewNotFoundException.WithGameReviewId(gameId,reviewerId);
+               .FirstOrDefaultAsync(review => review.GameId == gameId && review.ReviewerId == reviewerId)
+               ?? throw GameReviewNotFoundException.WithGameReviewId(gameId, reviewerId);
 
-            game.Reviews.Remove(gameReviewFromDb);
+            context.Reviews.Remove(gameReviewFromDb);
 
-            return gameReviewFromDb;
+            return new GameReviewDto
+            {
+                GameId = gameReviewFromDb.GameId,
+                Rating = gameReviewFromDb.Rating,
+                ReviewerId = gameReviewFromDb.ReviewerId,
+                Summary = gameReviewFromDb.Summary
+            };
         }
     }
 

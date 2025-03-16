@@ -60,6 +60,18 @@ namespace Common_GraphQL_dotnet.Error
                     .SetExtension($"{ServerErrorCode.ResourceNotFound}_REVIEWER_ID", gameReviewNotFoundException.ReviewerId)
                     .Build();
             }
+            else if (error.Exception is ReviewerNotFoundException reviewerNotFoundException)
+            {
+                _logger.LogError(reviewerNotFoundException, "Game not found");
+
+                return ErrorBuilder
+                    .New()
+                    .SetMessage($"A reviewer having id '{reviewerNotFoundException.ReviewerId} could not found")
+                    .SetCode(ServerErrorCode.ResourceNotFound)
+                    .SetPath(error.Path)
+                    .SetExtension($"{ServerErrorCode.ResourceNotFound}_REVIEWER_ID", reviewerNotFoundException.ReviewerId)
+                    .Build();
+            }
 
             _logger.LogError(error.Exception, error.Message);
 

@@ -4,8 +4,25 @@ using Common_GraphQL_dotnet.DTO;
 using Common_GraphQL_dotnet.Validator;
 using FluentValidation;
 using Common_GraphQL_dotnet.Error;
+using Common_GraphQL_dotnet.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder
+   .Services
+   .AddDbContextFactory<AppDbContext>(options =>
+   {
+       options.UseInMemoryDatabase("gamegraphQL");
+       options.EnableDetailedErrors(builder.Environment.IsDevelopment());
+       options.EnableSensitiveDataLogging(builder.Environment.IsDevelopment());
+   });
+
+builder
+   .Services
+   .AddScoped<AppDbContext>(provider => provider
+      .GetRequiredService<IDbContextFactory<AppDbContext>>()
+      .CreateDbContext());
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -36,7 +53,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    
+
 }
 
 app.UseHttpsRedirection();
