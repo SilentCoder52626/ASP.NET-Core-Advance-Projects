@@ -9,6 +9,7 @@ namespace Common_GraphQL_dotnet.Query
     public class ReviewerQuery
     {
         [GraphQLDescription("Get a list of reviewers")]
+        [UsePaging]
         [UseProjection]
         [UseFiltering]
         [UseSorting]

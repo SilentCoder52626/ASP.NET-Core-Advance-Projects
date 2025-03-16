@@ -9,6 +9,10 @@ namespace Common_GraphQL_dotnet.Query
     public sealed class GamesQuery
     {
         [GraphQLDescription("Get list of games")]
+        [UsePaging]
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
         public IQueryable<GameDto> GetGames([Service] AppDbContext context)
         {
             return context
