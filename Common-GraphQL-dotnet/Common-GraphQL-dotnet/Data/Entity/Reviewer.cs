@@ -1,4 +1,4 @@
-﻿namespace Common_GraphQL_dotnet.Entity
+﻿namespace Common_GraphQL_dotnet.Data.Entity
 {
     public class Reviewer
     {
