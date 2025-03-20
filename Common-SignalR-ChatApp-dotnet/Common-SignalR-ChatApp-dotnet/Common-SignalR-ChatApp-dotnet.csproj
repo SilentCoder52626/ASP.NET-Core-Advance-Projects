@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Common_RabbitMQ_ChatAPP_dotnet</RootNamespace>
+    <RootNamespace>Common_SignalR_ChatApp_dotnet</RootNamespace>
   </PropertyGroup>
 
 </Project>

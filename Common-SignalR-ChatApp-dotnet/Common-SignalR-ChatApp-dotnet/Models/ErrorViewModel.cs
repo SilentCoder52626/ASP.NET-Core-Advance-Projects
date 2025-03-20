@@ -1,4 +1,4 @@
-namespace Common_RabbitMQ_ChatAPP_dotnet.Models
+namespace Common_SignalR_ChatApp_dotnet.Models
 {
     public class ErrorViewModel
     {
